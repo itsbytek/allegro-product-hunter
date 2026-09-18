@@ -77,7 +77,9 @@ class AllegroClient:
         }
 
     async def application_token(self, force: bool = False) -> str:
-        saved = self.config.get_secret(ALLEGRO_ACCESS_TOKEN_KEY)
+        # A token stored by an unavailable keyring must not block a forced
+        # refresh or turn a connection test into an internal server error.
+        saved = "" if force else self.config.get_secret(ALLEGRO_ACCESS_TOKEN_KEY)
         status = self.config.allegro()
         expires_at = status.get("token_expires_at")
         if saved and not force and expires_at:
@@ -263,7 +265,7 @@ class AllegroClient:
                 code = (detail.get("errors") or [{}])[0].get("code")
             except ValueError:
                 code = None
-            if code == "VerificationRequired" or "verified" in last_response.text.casefold():
+            if path == "/offers/listing" or code == "VerificationRequired" or "verified" in last_response.text.casefold():
                 self.config.update_allegro_status(
                     listing_access="DENIED", last_connection_error="403 VerificationRequired"
                 )

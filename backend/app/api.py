@@ -201,6 +201,11 @@ async def test_allegro(db: Session = Depends(get_db)) -> dict[str, Any]:
             listing_access = "GRANTED"
         except ListingAccessDenied:
             listing_access = "DENIED"
+        except AllegroApiError as exc:
+            if exc.status_code == 403:
+                listing_access = "DENIED"
+            else:
+                raise
         return {"oauth": "OK", "listing_access": listing_access}
     except AllegroApiError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
