@@ -1,0 +1,1 @@
+"""Allegro Product Hunter backend."""

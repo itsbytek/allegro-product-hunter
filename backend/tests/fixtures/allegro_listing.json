@@ -1,0 +1,33 @@
+{
+  "items": {
+    "promoted": [],
+    "regular": [
+      {
+        "id": "7781902469",
+        "name": "IVY H, ME05010G, Kolczyki",
+        "seller": {
+          "id": "111040225",
+          "login": "hivionics",
+          "company": true,
+          "superSeller": false
+        },
+        "promotion": {"emphasized": false, "bold": false, "highlight": false},
+        "delivery": {
+          "availableForFree": false,
+          "lowestPrice": {"amount": "1.00", "currency": "PLN"}
+        },
+        "images": [{"url": "https://a.allegroimg.example/image"}],
+        "sellingMode": {
+          "format": "BUY_NOW",
+          "price": {"amount": "145.13", "currency": "PLN"},
+          "popularity": 42,
+          "popularityRange": "20-49"
+        },
+        "stock": {"unit": "UNIT", "available": 1},
+        "category": {"id": "123429"}
+      }
+    ]
+  },
+  "searchMeta": {"availableCount": 1, "totalCount": 1, "fallback": false}
+}
+
