@@ -44,10 +44,15 @@ class SecretStore:
             return ""
         try:
             keyring.set_password(self.service_name, key, value)
-            return f"keyring:{key}"
+            # Some Windows keyring backends accept writes but do not persist or
+            # return them in the next process. Verify the round-trip before
+            # recording a keyring marker; otherwise use the encrypted fallback.
+            if keyring.get_password(self.service_name, key) == value:
+                return f"keyring:{key}"
         except Exception:
-            encrypted = self._fernet().encrypt(value.encode("utf-8")).decode("ascii")
-            return f"fernet:{encrypted}"
+            pass
+        encrypted = self._fernet().encrypt(value.encode("utf-8")).decode("ascii")
+        return f"fernet:{encrypted}"
 
     def decrypt(self, key: str, marker: str | None) -> str:
         if not marker:

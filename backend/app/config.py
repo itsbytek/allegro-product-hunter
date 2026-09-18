@@ -13,7 +13,9 @@ class AppSettings(BaseSettings):
     database_url: str = f"sqlite:///{(BASE_DIR / 'data' / 'allegro_hunter.db').as_posix()}"
     api_host: str = "127.0.0.1"
     api_port: int = 8000
-    frontend_url: str = "http://localhost:5173"
+    # start.bat serves the built frontend from FastAPI on port 8000.
+    # Vite development on 5173 remains supported through FRONTEND_URL in .env.
+    frontend_url: str = "http://127.0.0.1:8000"
     log_level: str = "INFO"
 
     allegro_client_id: str = ""
